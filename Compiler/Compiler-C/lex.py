@@ -67,6 +67,7 @@ def t_ID(t):
     t.type = reserved.get(t.value, 'ID')    # Check for reserved words
     return t
 
+
 t_LBRACKET = r'\['
 t_RBRACKET = r'\]'
 t_LBRACE = r'\{'
@@ -106,7 +107,8 @@ def make_tokens(file):
     tokens = []
     while True:
         tok = lexer.token()
-        if not tok: break      # No more input
+        if not tok:
+            break      # No more input
         file.write(tok)
         tokens.append(tok)
     return tokens
