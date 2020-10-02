@@ -1,0 +1,18 @@
+int plus(int n1, int n2)
+{
+    int sum;
+    sum = n1 + n2;
+    return sum;
+}
+
+int main ()
+{
+    int i;
+    i = 0;
+}
+
+int teste ()
+{
+    int t;
+    t = 0;
+}

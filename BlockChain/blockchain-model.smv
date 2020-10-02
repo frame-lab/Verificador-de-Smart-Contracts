@@ -1,0 +1,87 @@
+MODULE createNode(nodeId)
+
+	VAR
+		IPSent: boolean;
+		IPReceived: boolean;
+		connectSeed: boolean;
+		versionSent: boolean;
+		verack: boolean;
+		networkOK: boolean;
+		lastBlockId: 0..10;
+	
+	ASSIGN
+		init(IPSent) := TRUE;
+		init(IPReceived) := FALSE;
+		init(connectSeed) := FALSE;
+		init(versionSent) := FALSE;
+		init(verack) := FALSE;
+		init(networkOK) := FALSE;
+		init(lastBlockId) := 0;
+
+
+		next(IPSent) := TRUE;
+		next(IPReceived) := IPSent = TRUE ? TRUE : FALSE;
+		next(connectSeed) := (IPSent = TRUE & IPReceived = TRUE) ? TRUE : FALSE;
+		next(versionSent) := connectSeed = TRUE ? TRUE : FALSE;
+		next(verack) := versionSent = TRUE ? TRUE : FALSE;
+		next(networkOK) := verack = TRUE ? TRUE : FALSE;
+
+MODULE createUser(idUser, initBalance)
+
+	VAR
+		balance : 0..400;
+		busy : boolean;
+
+	ASSIGN
+		init(balance) := initBalance;
+
+	TRANS !update -> conserve ;
+	
+	DEFINE
+		conserve := (next(balance) = balance);
+
+MODULE createTransaction(idTrans, from, to, amount)
+	
+	FROZENVAR
+		blockId : 0..10;
+
+
+	DEFINE
+		validTransaction :=  !from.busy & !to.busy & from.balance >= amount; --- Does the sender user have enough balance?
+		newFromBalance := from.balance - amount;
+		newToBalance :=  to.balance + amount;
+
+	TRANS
+		validTransaction -> (next(from.balance)= newFromBalance) & 
+							(next(to.balance)=newToBalance) & 
+							(next(from.busy)=!from.busy) & 
+							(next(to.busy)=!to.busy);
+
+
+MODULE createBlock(idBloco, txa, txb)
+	FROZENVAR
+		id : 0..10;
+
+	ASSIGN
+		init(id) := idBloco;
+		init(txa.blockId) := validBlock ? id : 0;
+		init(txb.blockId) := validBlock ? id : 0;
+		
+
+	DEFINE
+		validBlock := txa.validTransaction & txb.validTransaction;
+		nonce := signed word[32](190);
+		--hash := validBlock ? (nonce :: signed word [32](txa.to) :: signed word [32](txb.to) :: signed word[32](previousBlock))
+		--		: unsigned word[128](0);
+
+
+
+MODULE updateNode(node, block)
+
+	DEFINE
+		lastNodeBlock := node.lastBlockId;
+		blockToUpdate := block.validBlock ? block.id : -1;
+		shouldUpdate := lastNodeBlock <= blockToUpdate;	
+	ASSIGN
+		next(node.lastBlockId) := shouldUpdate ? lastNodeBlock : block.id;
+

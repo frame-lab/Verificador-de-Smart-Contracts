@@ -1,0 +1,6 @@
+int main ()
+{
+    do {
+        result = result + 1;
+    } while (i < 10);
+}

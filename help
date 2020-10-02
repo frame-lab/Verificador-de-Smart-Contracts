@@ -1,0 +1,11 @@
+interface - interface for the smart contracts checker
+Usage: python interface <input file>
+-h      prints this help
+-hc     prints the C compiler help
+-hx     prints the XML compiler help
+-hb     prints the BlockChain help
+-c      executes the C compiler algorithm
+-x      executes the XML compiler algorithm
+-b      executes the BlockChain algorithm
+-bc     executes the BlockChain algorithm with blocks in C
+-bx     executes the BlockChain algorithm with blocks in xml
