@@ -1,11 +1,12 @@
 interface - interface for the smart contracts checker
-Usage: python interface <input file>
+Usage: python interface -args
 -h      prints this help
 -hc     prints the C compiler help
--hx     prints the XML compiler help
--hb     prints the BlockChain help
--c      executes the C compiler algorithm
--x      executes the XML compiler algorithm
+-hj     prints the XML compiler help
+-c      executes the C to pdl converter algorithm
+-cn     executes the pdl to nuxmv with c programs converter algorithm
+-j      executes the XML to pdl converter algorithm
+-jn     executes the pdl to nuxmv with xml programs converter algorithm
 -b      executes the BlockChain algorithm
 -bc     executes the BlockChain algorithm with blocks in C
--bx     executes the BlockChain algorithm with blocks in xml
+-bj     executes the BlockChain algorithm with blocks in xml

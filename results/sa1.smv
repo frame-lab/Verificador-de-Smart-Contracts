@@ -1,0 +1,40 @@
+Module main
+
+	VAR
+		program: {int_a_0;int_b_1;float_c_2;float_d_3;main_func}
+		a: 0...75.0
+		b: 0...97.0
+		c: 0...51.0
+		d: 0...12.0
+		
+	ASSIGN
+		init(prog):= int_a;
+		next(program):= case
+			program = int_a_0 : int_b_1;
+			program = int_b_1 : float_c_2;
+			program = float_c_2 : float_d_3;
+			Module main_func
+
+	VAR
+		program: {int_argc_0;int_argv_1;a_=_75_2;b_=_97_3;c_=_51_4;i_<_10_5;i_=_i_+_1_5;i_=_2_5;i_<_10_5;d_=_12_16;a_=_b_+_c_-_d_17;return_a_18}
+		argc: 0...0
+		argv: 0...0
+		
+	ASSIGN
+		init(prog):= int_argc;
+		init(a):= 75;
+		init(b):= 97;
+		init(c):= 51;
+		init(d):= 12;
+		next(program):= case
+			program = int_argc_0 : int_argv_1;
+			program = int_argv_1 : a_=_75_2;
+			program = a_=_75_2 : b_=_97_3;
+			program = b_=_97_3 : c_=_51_4;
+			program = c_=_51_4 : i_<_10_5;
+			program = i_<_10_5 : i_=_i_+_1_5;
+			program = i_=_i_+_1_5 : i_=_2_5;
+			program = i_=_2_5 : i_<_10_5;
+			program = i_<_10_5 : d_=_12_16;
+			program = d_=_12_16 : a_=_b_+_c_-_d_17;
+			

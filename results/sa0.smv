@@ -1,0 +1,9 @@
+Module main_func
+
+	VAR
+		program: {}
+		
+	ASSIGN
+		init(prog):= );
+		next(program):= case
+			

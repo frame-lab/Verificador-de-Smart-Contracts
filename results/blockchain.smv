@@ -1,0 +1,409 @@
+MODULE createNode(nodeId)
+
+	VAR
+		IPSent: boolean;
+		IPReceived: boolean;
+		connectSeed: boolean;
+		versionSent: boolean;
+		verack: boolean;
+		networkOK: boolean;
+		lastBlockId: 0..10;
+	
+	ASSIGN
+		init(IPSent) := TRUE;
+		init(IPReceived) := FALSE;
+		init(connectSeed) := FALSE;
+		init(versionSent) := FALSE;
+		init(verack) := FALSE;
+		init(networkOK) := FALSE;
+		init(lastBlockId) := 0;
+
+
+		next(IPSent) := TRUE;
+		next(IPReceived) := IPSent = TRUE ? TRUE : FALSE;
+		next(connectSeed) := (IPSent = TRUE & IPReceived = TRUE) ? TRUE : FALSE;
+		next(versionSent) := connectSeed = TRUE ? TRUE : FALSE;
+		next(verack) := versionSent = TRUE ? TRUE : FALSE;
+		next(networkOK) := verack = TRUE ? TRUE : FALSE;
+
+MODULE createUser(idUser, initBalance)
+
+	VAR
+		balance : 0..400;
+		busy : boolean;
+
+	ASSIGN
+		init(balance) := initBalance;
+
+	TRANS !update -> conserve ;
+	
+	DEFINE
+		conserve := (next(balance) = balance);
+
+MODULE createTransaction(idTrans, from, to, amount)
+	
+	FROZENVAR
+		blockId : 0..10;
+
+
+	DEFINE
+		validTransaction :=  !from.busy & !to.busy & from.balance >= amount; --- Does the sender user have enough balance?
+		newFromBalance := from.balance - amount;
+		newToBalance :=  to.balance + amount;
+
+	TRANS
+		validTransaction -> (next(from.balance)= newFromBalance) & 
+							(next(to.balance)=newToBalance) & 
+							(next(from.busy)=!from.busy) & 
+							(next(to.busy)=!to.busy);
+
+
+MODULE createBlock(idBloco, txa, txb)
+	FROZENVAR
+		id : 0..10;
+
+	ASSIGN
+		init(id) := idBloco;
+		init(txa.blockId) := validBlock ? id : 0;
+		init(txb.blockId) := validBlock ? id : 0;
+		
+
+	DEFINE
+		validBlock := txa.validTransaction & txb.validTransaction;
+		nonce := signed word[32](190);
+		--hash := validBlock ? (nonce :: signed word [32](txa.to) :: signed word [32](txb.to) :: signed word[32](previousBlock))
+		--		: unsigned word[128](0);
+
+
+
+MODULE updateNode(node, block)
+
+	DEFINE
+		lastNodeBlock := node.lastBlockId;
+		blockToUpdate := block.validBlock ? block.id : -1;
+		shouldUpdate := lastNodeBlock <= blockToUpdate;	
+	ASSIGN
+		next(node.lastBlockId) := shouldUpdate ? lastNodeBlock : block.id;
+
+MODULE main
+
+	VAR
+		node1 : createNode(1);
+		node2 : createNode(2);
+		node3 : createNode(3);
+		node4 : createNode(4);
+		node5 : createNode(5);
+		node6 : createNode(6);
+		node7 : createNode(7);
+		node8 : createNode(8);
+		node9 : createNode(9);
+		node10 : createNode(10);
+		node11 : createNode(11);
+		node12 : createNode(12);
+		node13 : createNode(13);
+		node14 : createNode(14);
+		node15 : createNode(15);
+		node16 : createNode(16);
+		node17 : createNode(17);
+
+		user1 : createUser(self,61);
+		user2 : createUser(self,5);
+		user3 : createUser(self,87);
+		user4 : createUser(self,14);
+		user5 : createUser(self,55);
+		user6 : createUser(self,48);
+		user7 : createUser(self,37);
+		user8 : createUser(self,0);
+		user9 : createUser(self,4);
+		user10 : createUser(self,0);
+		user11 : createUser(self,66);
+		user12 : createUser(self,28);
+		user13 : createUser(self,64);
+		user14 : createUser(self,66);
+		user15 : createUser(self,29);
+		user16 : createUser(self,87);
+		user17 : createUser(self,64);
+
+		tx1 : createTransaction(self,user16,user16,16);
+		tx2 : createTransaction(self,user16,user16,16);
+		tx3 : createTransaction(self,user16,user16,16);
+		tx4 : createTransaction(self,user16,user16,16);
+		tx5 : createTransaction(self,user16,user16,16);
+		tx6 : createTransaction(self,user16,user16,16);
+		tx7 : createTransaction(self,user16,user16,16);
+		tx8 : createTransaction(self,user16,user16,16);
+		tx9 : createTransaction(self,user16,user16,16);
+		tx10 : createTransaction(self,user16,user16,16);
+		tx11 : createTransaction(self,user16,user16,16);
+		tx12 : createTransaction(self,user16,user16,16);
+		tx13 : createTransaction(self,user16,user16,16);
+		tx14 : createTransaction(self,user16,user16,16);
+		tx15 : createTransaction(self,user16,user16,16);
+		tx16 : createTransaction(self,user16,user16,16);
+		tx17 : createTransaction(self,user16,user16,16);
+		tx18 : createTransaction(self,user16,user16,16);
+		tx19 : createTransaction(self,user16,user16,16);
+		tx20 : createTransaction(self,user16,user16,16);
+		tx21 : createTransaction(self,user16,user16,16);
+		tx22 : createTransaction(self,user16,user16,16);
+		tx23 : createTransaction(self,user16,user16,16);
+		tx24 : createTransaction(self,user16,user16,16);
+		tx25 : createTransaction(self,user16,user16,16);
+		tx26 : createTransaction(self,user16,user16,16);
+		tx27 : createTransaction(self,user16,user16,16);
+		tx28 : createTransaction(self,user16,user16,16);
+		tx29 : createTransaction(self,user16,user16,16);
+		tx30 : createTransaction(self,user16,user16,16);
+		tx31 : createTransaction(self,user16,user16,16);
+		tx32 : createTransaction(self,user16,user16,16);
+
+		block1 : createBlock(1,tx31,tx16);
+		block2 : createBlock(2,tx16,tx17);
+		block3 : createBlock(3,tx17,tx18);
+		block4 : createBlock(4,tx18,tx19);
+		block5 : createBlock(5,tx19,tx20);
+		block6 : createBlock(6,tx20,tx21);
+		block7 : createBlock(7,tx21,tx22);
+		block8 : createBlock(8,tx22,tx23);
+		block9 : createBlock(9,tx23,tx24);
+		block10 : createBlock(10,tx24,tx25);
+		block11 : createBlock(11,tx25,tx26);
+		block12 : createBlock(12,tx26,tx27);
+		block13 : createBlock(13,tx27,tx28);
+		block14 : createBlock(14,tx28,tx29);
+		block15 : createBlock(15,tx29,tx30);
+		block16 : createBlock(16,tx30,tx32);
+
+	ASSIGN
+		init(user1.busy) := TRUE;
+		init(user2.busy) := TRUE;
+		init(user3.busy) := TRUE;
+		init(user4.busy) := TRUE;
+		init(user5.busy) := TRUE;
+		init(user6.busy) := TRUE;
+		init(user7.busy) := TRUE;
+		init(user8.busy) := TRUE;
+		init(user9.busy) := TRUE;
+		init(user10.busy) := TRUE;
+		init(user11.busy) := TRUE;
+		init(user12.busy) := TRUE;
+		init(user13.busy) := TRUE;
+		init(user14.busy) := TRUE;
+		init(user15.busy) := TRUE;
+		init(user16.busy) := TRUE;
+
+	DEFINE
+		user1.update := FALSE;
+		user2.update := FALSE;
+		user3.update := FALSE;
+		user4.update := FALSE;
+		user5.update := FALSE;
+		user6.update := FALSE;
+		user7.update := FALSE;
+		user8.update := FALSE;
+		user9.update := FALSE;
+		user10.update := FALSE;
+		user11.update := FALSE;
+		user12.update := FALSE;
+		user13.update := FALSE;
+		user14.update := FALSE;
+		user15.update := FALSE;
+		user16.update := tx1.validTransaction | tx2.validTransaction | tx3.validTransaction | tx4.validTransaction | tx5.validTransaction | tx6.validTransaction | tx7.validTransaction | tx8.validTransaction | tx9.validTransaction | tx10.validTransaction | tx11.validTransaction | tx12.validTransaction | tx13.validTransaction | tx14.validTransaction | tx15.validTransaction | tx16.validTransaction | tx17.validTransaction | tx18.validTransaction | tx19.validTransaction | tx20.validTransaction | tx21.validTransaction | tx22.validTransaction | tx23.validTransaction | tx24.validTransaction | tx25.validTransaction | tx26.validTransaction | tx27.validTransaction | tx28.validTransaction | tx29.validTransaction | tx30.validTransaction | tx31.validTransaction | tx32.validTransaction;
+		user17.update := FALSE;
+
+		block1.previousBlock := block1.validBlock ? 0 : -1;
+		block2.previousBlock := case
+			block2.validBlock : case
+				block1.validBlock : block1.id;
+				esac;
+			TRUE : -1;
+			esac;
+		block3.previousBlock := case
+			block3.validBlock : case
+				block2.validBlock : block2.id;
+				block1.validBlock : block1.id;
+				esac;
+			TRUE : -1;
+			esac;
+		block4.previousBlock := case
+			block4.validBlock : case
+				block3.validBlock : block3.id;
+				block2.validBlock : block2.id;
+				block1.validBlock : block1.id;
+				esac;
+			TRUE : -1;
+			esac;
+		block5.previousBlock := case
+			block5.validBlock : case
+				block4.validBlock : block4.id;
+				block3.validBlock : block3.id;
+				block2.validBlock : block2.id;
+				block1.validBlock : block1.id;
+				esac;
+			TRUE : -1;
+			esac;
+		block6.previousBlock := case
+			block6.validBlock : case
+				block5.validBlock : block5.id;
+				block4.validBlock : block4.id;
+				block3.validBlock : block3.id;
+				block2.validBlock : block2.id;
+				block1.validBlock : block1.id;
+				esac;
+			TRUE : -1;
+			esac;
+		block7.previousBlock := case
+			block7.validBlock : case
+				block6.validBlock : block6.id;
+				block5.validBlock : block5.id;
+				block4.validBlock : block4.id;
+				block3.validBlock : block3.id;
+				block2.validBlock : block2.id;
+				block1.validBlock : block1.id;
+				esac;
+			TRUE : -1;
+			esac;
+		block8.previousBlock := case
+			block8.validBlock : case
+				block7.validBlock : block7.id;
+				block6.validBlock : block6.id;
+				block5.validBlock : block5.id;
+				block4.validBlock : block4.id;
+				block3.validBlock : block3.id;
+				block2.validBlock : block2.id;
+				block1.validBlock : block1.id;
+				esac;
+			TRUE : -1;
+			esac;
+		block9.previousBlock := case
+			block9.validBlock : case
+				block8.validBlock : block8.id;
+				block7.validBlock : block7.id;
+				block6.validBlock : block6.id;
+				block5.validBlock : block5.id;
+				block4.validBlock : block4.id;
+				block3.validBlock : block3.id;
+				block2.validBlock : block2.id;
+				block1.validBlock : block1.id;
+				esac;
+			TRUE : -1;
+			esac;
+		block10.previousBlock := case
+			block10.validBlock : case
+				block9.validBlock : block9.id;
+				block8.validBlock : block8.id;
+				block7.validBlock : block7.id;
+				block6.validBlock : block6.id;
+				block5.validBlock : block5.id;
+				block4.validBlock : block4.id;
+				block3.validBlock : block3.id;
+				block2.validBlock : block2.id;
+				block1.validBlock : block1.id;
+				esac;
+			TRUE : -1;
+			esac;
+		block11.previousBlock := case
+			block11.validBlock : case
+				block10.validBlock : block10.id;
+				block9.validBlock : block9.id;
+				block8.validBlock : block8.id;
+				block7.validBlock : block7.id;
+				block6.validBlock : block6.id;
+				block5.validBlock : block5.id;
+				block4.validBlock : block4.id;
+				block3.validBlock : block3.id;
+				block2.validBlock : block2.id;
+				block1.validBlock : block1.id;
+				esac;
+			TRUE : -1;
+			esac;
+		block12.previousBlock := case
+			block12.validBlock : case
+				block11.validBlock : block11.id;
+				block10.validBlock : block10.id;
+				block9.validBlock : block9.id;
+				block8.validBlock : block8.id;
+				block7.validBlock : block7.id;
+				block6.validBlock : block6.id;
+				block5.validBlock : block5.id;
+				block4.validBlock : block4.id;
+				block3.validBlock : block3.id;
+				block2.validBlock : block2.id;
+				block1.validBlock : block1.id;
+				esac;
+			TRUE : -1;
+			esac;
+		block13.previousBlock := case
+			block13.validBlock : case
+				block12.validBlock : block12.id;
+				block11.validBlock : block11.id;
+				block10.validBlock : block10.id;
+				block9.validBlock : block9.id;
+				block8.validBlock : block8.id;
+				block7.validBlock : block7.id;
+				block6.validBlock : block6.id;
+				block5.validBlock : block5.id;
+				block4.validBlock : block4.id;
+				block3.validBlock : block3.id;
+				block2.validBlock : block2.id;
+				block1.validBlock : block1.id;
+				esac;
+			TRUE : -1;
+			esac;
+		block14.previousBlock := case
+			block14.validBlock : case
+				block13.validBlock : block13.id;
+				block12.validBlock : block12.id;
+				block11.validBlock : block11.id;
+				block10.validBlock : block10.id;
+				block9.validBlock : block9.id;
+				block8.validBlock : block8.id;
+				block7.validBlock : block7.id;
+				block6.validBlock : block6.id;
+				block5.validBlock : block5.id;
+				block4.validBlock : block4.id;
+				block3.validBlock : block3.id;
+				block2.validBlock : block2.id;
+				block1.validBlock : block1.id;
+				esac;
+			TRUE : -1;
+			esac;
+		block15.previousBlock := case
+			block15.validBlock : case
+				block14.validBlock : block14.id;
+				block13.validBlock : block13.id;
+				block12.validBlock : block12.id;
+				block11.validBlock : block11.id;
+				block10.validBlock : block10.id;
+				block9.validBlock : block9.id;
+				block8.validBlock : block8.id;
+				block7.validBlock : block7.id;
+				block6.validBlock : block6.id;
+				block5.validBlock : block5.id;
+				block4.validBlock : block4.id;
+				block3.validBlock : block3.id;
+				block2.validBlock : block2.id;
+				block1.validBlock : block1.id;
+				esac;
+			TRUE : -1;
+			esac;
+		block16.previousBlock := case
+			block16.validBlock : case
+				block15.validBlock : block15.id;
+				block14.validBlock : block14.id;
+				block13.validBlock : block13.id;
+				block12.validBlock : block12.id;
+				block11.validBlock : block11.id;
+				block10.validBlock : block10.id;
+				block9.validBlock : block9.id;
+				block8.validBlock : block8.id;
+				block7.validBlock : block7.id;
+				block6.validBlock : block6.id;
+				block5.validBlock : block5.id;
+				block4.validBlock : block4.id;
+				block3.validBlock : block3.id;
+				block2.validBlock : block2.id;
+				block1.validBlock : block1.id;
+				esac;
+			TRUE : -1;
+			esac;

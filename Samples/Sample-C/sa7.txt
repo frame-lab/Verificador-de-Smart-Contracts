@@ -1,7 +1,0 @@
-int main ()
-{
-	int i, j, a, b, c;
-	int result;
-			result = i + j;
-	return 0;
-}
