@@ -6,7 +6,7 @@
 
 import libs.ply.lex as lex
 from program.compiler.rules_c.rules_lex import MyCRules
-from program.compiler.rules_json.rules_lex import MyJsonRules
+from program.compiler.rules_smacco.rules_lex import MyJsonRules
 
 
 class MyLexer(object):
@@ -16,11 +16,12 @@ class MyLexer(object):
             self.rules = MyCRules(options)
             self.lexer = lex.lex(module=self.rules)
             self.tokens = self.rules.tokens
-        elif options['program'] == 1:
+            self.out = open("./results/minic/{}_token".format(name), "w")
+        elif options['program'] == 2:
             self.rules = MyJsonRules(options)
             self.lexer = lex.lex(module=self.rules)
             self.tokens = self.rules.tokens
-        self.out = open("./results/{}_token".format(name), "w")
+            self.out = open("./results/smacco/{}_token".format(name), "w")
 
     def make_tokens(self, data):
         self.lexer.input(data)

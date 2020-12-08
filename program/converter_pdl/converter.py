@@ -1,6 +1,6 @@
 from program.compiler.yacc import MyCompiler
 from program.converter_pdl.rules_c.rules import MyCRules
-from program.converter_pdl.rules_json.rules import MyJsonRules
+from program.converter_pdl.rules_smacco.rules import MySmaccoRules
 import os
 
 
@@ -49,14 +49,17 @@ class MyPdlConverter:
         data = str(file.read())
         compiler = MyCompiler(self.options, name)
         tree = compiler.make_parser(data)
-        out = open("./results/{}_pdl".format(name), "w")
+        if self.options['program'] == 1:
+            out = open("./results/minic/{}_pdl".format(name), "w")
+        else:
+            out = open("./results/smacco/{}_pdl".format(name), "w")
         pdl = None
         if tree != None:
             if self.options['program'] == 1:
                 rules = MyCRules(Node)
                 pdl = rules.do_rules(tree)
             elif self.options['program'] == 2:
-                rules = MyJsonRules(Node)
+                rules = MySmaccoRules(Node)
                 pdl = rules.do_rules(tree)
             self.write_file(out, pdl)
         out.close()

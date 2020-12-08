@@ -1,0 +1,8 @@
+Module main_func
+
+	VAR
+		program: {standard_=_smacco_0;input_type_=_single_1;inline_last_=_disabled_2;default_rule_=_ALLOW_ALL_3}
+		
+	ASSIGN
+		init(prog):= True
+		

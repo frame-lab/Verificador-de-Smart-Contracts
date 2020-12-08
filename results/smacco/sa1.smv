@@ -1,0 +1,7 @@
+MODULE main
+
+VAR
+	program : {standard_=_smacco_0, input_type_=_single_1, inline_last_=_disabled_2, default_rule_=_DENY_ALL_3};
+	
+ASSIGN
+	init(proram) := standard_=_smacco_0;

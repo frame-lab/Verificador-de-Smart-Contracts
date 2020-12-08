@@ -1,0 +1,1051 @@
+Created by PLY version 3.11 (http://www.dabeaz.com/ply)
+
+Grammar
+
+Rule 0     S' -> program
+Rule 1     program -> LBRACE RBRACE
+Rule 2     program -> LBRACE paramlist RBRACE
+Rule 3     paramlist -> param
+Rule 4     paramlist -> paramlist COMMA param
+Rule 5     param -> QUOT type QUOT COLON expression
+Rule 6     type -> STANDARD
+Rule 7     type -> INPUT_TYPE
+Rule 8     type -> PUBKEY_LIST
+Rule 9     type -> RULE
+Rule 10    type -> RULES
+Rule 11    type -> DEFAULT_RULE
+Rule 12    type -> INLINE_LAST
+Rule 13    expression -> variable
+Rule 14    expression -> list
+Rule 15    expression -> object
+Rule 16    variable -> QUOT input QUOT
+Rule 17    input -> SINGLE
+Rule 18    input -> ARRAY
+Rule 19    input -> SMACCO
+Rule 20    input -> DISABLED
+Rule 21    input -> ALLOW_ALL
+Rule 22    input -> DENY_ALL
+Rule 23    list -> LBRACKET RBRACKET
+Rule 24    list -> LBRACKET listparamlist RBRACKET
+Rule 25    listparamlist -> listparam
+Rule 26    listparamlist -> listparamlist COMMA listparam
+Rule 27    listparam -> object
+Rule 28    listparam -> QUOT ID QUOT
+Rule 29    object -> LBRACE RBRACE
+Rule 30    object -> LBRACE objectparamlist RBRACE
+Rule 31    objectparamlist -> objectparam
+Rule 32    objectparamlist -> objectparamlist COMMA objectparam
+Rule 33    objectparam -> QUOT objecttype QUOT COLON objectexpression
+Rule 34    objecttype -> RULE_TYPE
+Rule 35    objecttype -> CONDITION
+Rule 36    objectexpression -> objectvariable
+Rule 37    objectexpression -> objectcondition
+Rule 38    objectvariable -> QUOT objectinput QUOT
+Rule 39    objectinput -> ALLOW_IF
+Rule 40    objectinput -> DENY_IF
+Rule 41    objectcondition -> LBRACE RBRACE
+Rule 42    objectcondition -> LBRACE conditionparamlist RBRACE
+Rule 43    conditionparamlist -> conditionparam
+Rule 44    conditionparamlist -> conditionparamlist COMMA conditionparam
+Rule 45    conditionparam -> QUOT conditiontype QUOT COLON conditionexpression
+Rule 46    conditiontype -> CONDITION_TYPE
+Rule 47    conditiontype -> CONDITION_NAME
+Rule 48    conditiontype -> PUBKEY
+Rule 49    conditiontype -> PUBKEYS
+Rule 50    conditiontype -> SIGNATURES
+Rule 51    conditiontype -> MINIMUM_REQUIRED
+Rule 52    conditiontype -> CONDITIONS
+Rule 53    conditiontype -> TIMESTAMP
+Rule 54    conditiontype -> UTC
+Rule 55    conditionexpression -> conditionvariable
+Rule 56    conditionexpression -> conditionlist
+Rule 57    conditionvariable -> QUOT ID QUOT
+Rule 58    conditionlist -> LBRACKET RBRACKET
+Rule 59    conditionlist -> LBRACKET conditionlistparamlist RBRACKET
+Rule 60    conditionlistparamlist -> conditionlistparam
+Rule 61    conditionlistparamlist -> conditionlistparamlist COMMA conditionlistparam
+Rule 62    conditionlistparam -> objectcondition
+Rule 63    conditionlistparam -> QUOT ID QUOT
+
+Terminals, with rules where they appear
+
+ALLOW_ALL            : 21
+ALLOW_IF             : 39
+ARRAY                : 18
+COLON                : 5 33 45
+COMMA                : 4 26 32 44 61
+CONDITION            : 35
+CONDITIONS           : 52
+CONDITION_NAME       : 47
+CONDITION_TYPE       : 46
+DEFAULT_RULE         : 11
+DENY_ALL             : 22
+DENY_IF              : 40
+DISABLED             : 20
+ID                   : 28 57 63
+INLINE_LAST          : 12
+INPUT_TYPE           : 7
+LBRACE               : 1 2 29 30 41 42
+LBRACKET             : 23 24 58 59
+MINIMUM_REQUIRED     : 51
+PUBKEY               : 48
+PUBKEYS              : 49
+PUBKEY_LIST          : 8
+QUOT                 : 5 5 16 16 28 28 33 33 38 38 45 45 57 57 63 63
+RBRACE               : 1 2 29 30 41 42
+RBRACKET             : 23 24 58 59
+RULE                 : 9
+RULES                : 10
+RULE_TYPE            : 34
+SIGNATURES           : 50
+SINGLE               : 17
+SMACCO               : 19
+STANDARD             : 6
+TIMESTAMP            : 53
+UTC                  : 54
+error                : 
+
+Nonterminals, with rules where they appear
+
+conditionexpression  : 45
+conditionlist        : 56
+conditionlistparam   : 60 61
+conditionlistparamlist : 59 61
+conditionparam       : 43 44
+conditionparamlist   : 42 44
+conditiontype        : 45
+conditionvariable    : 55
+expression           : 5
+input                : 16
+list                 : 14
+listparam            : 25 26
+listparamlist        : 24 26
+object               : 15 27
+objectcondition      : 37 62
+objectexpression     : 33
+objectinput          : 38
+objectparam          : 31 32
+objectparamlist      : 30 32
+objecttype           : 33
+objectvariable       : 36
+param                : 3 4
+paramlist            : 2 4
+program              : 0
+type                 : 5
+variable             : 13
+
+Parsing method: LALR
+
+state 0
+
+    (0) S' -> . program
+    (1) program -> . LBRACE RBRACE
+    (2) program -> . LBRACE paramlist RBRACE
+
+    LBRACE          shift and go to state 2
+
+    program                        shift and go to state 1
+
+state 1
+
+    (0) S' -> program .
+
+
+
+state 2
+
+    (1) program -> LBRACE . RBRACE
+    (2) program -> LBRACE . paramlist RBRACE
+    (3) paramlist -> . param
+    (4) paramlist -> . paramlist COMMA param
+    (5) param -> . QUOT type QUOT COLON expression
+
+    RBRACE          shift and go to state 3
+    QUOT            shift and go to state 6
+
+    paramlist                      shift and go to state 4
+    param                          shift and go to state 5
+
+state 3
+
+    (1) program -> LBRACE RBRACE .
+
+    $end            reduce using rule 1 (program -> LBRACE RBRACE .)
+
+
+state 4
+
+    (2) program -> LBRACE paramlist . RBRACE
+    (4) paramlist -> paramlist . COMMA param
+
+    RBRACE          shift and go to state 7
+    COMMA           shift and go to state 8
+
+
+state 5
+
+    (3) paramlist -> param .
+
+    RBRACE          reduce using rule 3 (paramlist -> param .)
+    COMMA           reduce using rule 3 (paramlist -> param .)
+
+
+state 6
+
+    (5) param -> QUOT . type QUOT COLON expression
+    (6) type -> . STANDARD
+    (7) type -> . INPUT_TYPE
+    (8) type -> . PUBKEY_LIST
+    (9) type -> . RULE
+    (10) type -> . RULES
+    (11) type -> . DEFAULT_RULE
+    (12) type -> . INLINE_LAST
+
+    STANDARD        shift and go to state 10
+    INPUT_TYPE      shift and go to state 11
+    PUBKEY_LIST     shift and go to state 12
+    RULE            shift and go to state 13
+    RULES           shift and go to state 14
+    DEFAULT_RULE    shift and go to state 15
+    INLINE_LAST     shift and go to state 16
+
+    type                           shift and go to state 9
+
+state 7
+
+    (2) program -> LBRACE paramlist RBRACE .
+
+    $end            reduce using rule 2 (program -> LBRACE paramlist RBRACE .)
+
+
+state 8
+
+    (4) paramlist -> paramlist COMMA . param
+    (5) param -> . QUOT type QUOT COLON expression
+
+    QUOT            shift and go to state 6
+
+    param                          shift and go to state 17
+
+state 9
+
+    (5) param -> QUOT type . QUOT COLON expression
+
+    QUOT            shift and go to state 18
+
+
+state 10
+
+    (6) type -> STANDARD .
+
+    QUOT            reduce using rule 6 (type -> STANDARD .)
+
+
+state 11
+
+    (7) type -> INPUT_TYPE .
+
+    QUOT            reduce using rule 7 (type -> INPUT_TYPE .)
+
+
+state 12
+
+    (8) type -> PUBKEY_LIST .
+
+    QUOT            reduce using rule 8 (type -> PUBKEY_LIST .)
+
+
+state 13
+
+    (9) type -> RULE .
+
+    QUOT            reduce using rule 9 (type -> RULE .)
+
+
+state 14
+
+    (10) type -> RULES .
+
+    QUOT            reduce using rule 10 (type -> RULES .)
+
+
+state 15
+
+    (11) type -> DEFAULT_RULE .
+
+    QUOT            reduce using rule 11 (type -> DEFAULT_RULE .)
+
+
+state 16
+
+    (12) type -> INLINE_LAST .
+
+    QUOT            reduce using rule 12 (type -> INLINE_LAST .)
+
+
+state 17
+
+    (4) paramlist -> paramlist COMMA param .
+
+    RBRACE          reduce using rule 4 (paramlist -> paramlist COMMA param .)
+    COMMA           reduce using rule 4 (paramlist -> paramlist COMMA param .)
+
+
+state 18
+
+    (5) param -> QUOT type QUOT . COLON expression
+
+    COLON           shift and go to state 19
+
+
+state 19
+
+    (5) param -> QUOT type QUOT COLON . expression
+    (13) expression -> . variable
+    (14) expression -> . list
+    (15) expression -> . object
+    (16) variable -> . QUOT input QUOT
+    (23) list -> . LBRACKET RBRACKET
+    (24) list -> . LBRACKET listparamlist RBRACKET
+    (29) object -> . LBRACE RBRACE
+    (30) object -> . LBRACE objectparamlist RBRACE
+
+    QUOT            shift and go to state 20
+    LBRACKET        shift and go to state 25
+    LBRACE          shift and go to state 26
+
+    expression                     shift and go to state 21
+    variable                       shift and go to state 22
+    list                           shift and go to state 23
+    object                         shift and go to state 24
+
+state 20
+
+    (16) variable -> QUOT . input QUOT
+    (17) input -> . SINGLE
+    (18) input -> . ARRAY
+    (19) input -> . SMACCO
+    (20) input -> . DISABLED
+    (21) input -> . ALLOW_ALL
+    (22) input -> . DENY_ALL
+
+    SINGLE          shift and go to state 28
+    ARRAY           shift and go to state 29
+    SMACCO          shift and go to state 30
+    DISABLED        shift and go to state 31
+    ALLOW_ALL       shift and go to state 32
+    DENY_ALL        shift and go to state 33
+
+    input                          shift and go to state 27
+
+state 21
+
+    (5) param -> QUOT type QUOT COLON expression .
+
+    RBRACE          reduce using rule 5 (param -> QUOT type QUOT COLON expression .)
+    COMMA           reduce using rule 5 (param -> QUOT type QUOT COLON expression .)
+
+
+state 22
+
+    (13) expression -> variable .
+
+    RBRACE          reduce using rule 13 (expression -> variable .)
+    COMMA           reduce using rule 13 (expression -> variable .)
+
+
+state 23
+
+    (14) expression -> list .
+
+    RBRACE          reduce using rule 14 (expression -> list .)
+    COMMA           reduce using rule 14 (expression -> list .)
+
+
+state 24
+
+    (15) expression -> object .
+
+    RBRACE          reduce using rule 15 (expression -> object .)
+    COMMA           reduce using rule 15 (expression -> object .)
+
+
+state 25
+
+    (23) list -> LBRACKET . RBRACKET
+    (24) list -> LBRACKET . listparamlist RBRACKET
+    (25) listparamlist -> . listparam
+    (26) listparamlist -> . listparamlist COMMA listparam
+    (27) listparam -> . object
+    (28) listparam -> . QUOT ID QUOT
+    (29) object -> . LBRACE RBRACE
+    (30) object -> . LBRACE objectparamlist RBRACE
+
+    RBRACKET        shift and go to state 34
+    QUOT            shift and go to state 38
+    LBRACE          shift and go to state 26
+
+    listparamlist                  shift and go to state 35
+    listparam                      shift and go to state 36
+    object                         shift and go to state 37
+
+state 26
+
+    (29) object -> LBRACE . RBRACE
+    (30) object -> LBRACE . objectparamlist RBRACE
+    (31) objectparamlist -> . objectparam
+    (32) objectparamlist -> . objectparamlist COMMA objectparam
+    (33) objectparam -> . QUOT objecttype QUOT COLON objectexpression
+
+    RBRACE          shift and go to state 39
+    QUOT            shift and go to state 42
+
+    objectparamlist                shift and go to state 40
+    objectparam                    shift and go to state 41
+
+state 27
+
+    (16) variable -> QUOT input . QUOT
+
+    QUOT            shift and go to state 43
+
+
+state 28
+
+    (17) input -> SINGLE .
+
+    QUOT            reduce using rule 17 (input -> SINGLE .)
+
+
+state 29
+
+    (18) input -> ARRAY .
+
+    QUOT            reduce using rule 18 (input -> ARRAY .)
+
+
+state 30
+
+    (19) input -> SMACCO .
+
+    QUOT            reduce using rule 19 (input -> SMACCO .)
+
+
+state 31
+
+    (20) input -> DISABLED .
+
+    QUOT            reduce using rule 20 (input -> DISABLED .)
+
+
+state 32
+
+    (21) input -> ALLOW_ALL .
+
+    QUOT            reduce using rule 21 (input -> ALLOW_ALL .)
+
+
+state 33
+
+    (22) input -> DENY_ALL .
+
+    QUOT            reduce using rule 22 (input -> DENY_ALL .)
+
+
+state 34
+
+    (23) list -> LBRACKET RBRACKET .
+
+    RBRACE          reduce using rule 23 (list -> LBRACKET RBRACKET .)
+    COMMA           reduce using rule 23 (list -> LBRACKET RBRACKET .)
+
+
+state 35
+
+    (24) list -> LBRACKET listparamlist . RBRACKET
+    (26) listparamlist -> listparamlist . COMMA listparam
+
+    RBRACKET        shift and go to state 44
+    COMMA           shift and go to state 45
+
+
+state 36
+
+    (25) listparamlist -> listparam .
+
+    RBRACKET        reduce using rule 25 (listparamlist -> listparam .)
+    COMMA           reduce using rule 25 (listparamlist -> listparam .)
+
+
+state 37
+
+    (27) listparam -> object .
+
+    RBRACKET        reduce using rule 27 (listparam -> object .)
+    COMMA           reduce using rule 27 (listparam -> object .)
+
+
+state 38
+
+    (28) listparam -> QUOT . ID QUOT
+
+    ID              shift and go to state 46
+
+
+state 39
+
+    (29) object -> LBRACE RBRACE .
+
+    RBRACE          reduce using rule 29 (object -> LBRACE RBRACE .)
+    COMMA           reduce using rule 29 (object -> LBRACE RBRACE .)
+    RBRACKET        reduce using rule 29 (object -> LBRACE RBRACE .)
+
+
+state 40
+
+    (30) object -> LBRACE objectparamlist . RBRACE
+    (32) objectparamlist -> objectparamlist . COMMA objectparam
+
+    RBRACE          shift and go to state 47
+    COMMA           shift and go to state 48
+
+
+state 41
+
+    (31) objectparamlist -> objectparam .
+
+    RBRACE          reduce using rule 31 (objectparamlist -> objectparam .)
+    COMMA           reduce using rule 31 (objectparamlist -> objectparam .)
+
+
+state 42
+
+    (33) objectparam -> QUOT . objecttype QUOT COLON objectexpression
+    (34) objecttype -> . RULE_TYPE
+    (35) objecttype -> . CONDITION
+
+    RULE_TYPE       shift and go to state 50
+    CONDITION       shift and go to state 51
+
+    objecttype                     shift and go to state 49
+
+state 43
+
+    (16) variable -> QUOT input QUOT .
+
+    RBRACE          reduce using rule 16 (variable -> QUOT input QUOT .)
+    COMMA           reduce using rule 16 (variable -> QUOT input QUOT .)
+
+
+state 44
+
+    (24) list -> LBRACKET listparamlist RBRACKET .
+
+    RBRACE          reduce using rule 24 (list -> LBRACKET listparamlist RBRACKET .)
+    COMMA           reduce using rule 24 (list -> LBRACKET listparamlist RBRACKET .)
+
+
+state 45
+
+    (26) listparamlist -> listparamlist COMMA . listparam
+    (27) listparam -> . object
+    (28) listparam -> . QUOT ID QUOT
+    (29) object -> . LBRACE RBRACE
+    (30) object -> . LBRACE objectparamlist RBRACE
+
+    QUOT            shift and go to state 38
+    LBRACE          shift and go to state 26
+
+    listparam                      shift and go to state 52
+    object                         shift and go to state 37
+
+state 46
+
+    (28) listparam -> QUOT ID . QUOT
+
+    QUOT            shift and go to state 53
+
+
+state 47
+
+    (30) object -> LBRACE objectparamlist RBRACE .
+
+    RBRACE          reduce using rule 30 (object -> LBRACE objectparamlist RBRACE .)
+    COMMA           reduce using rule 30 (object -> LBRACE objectparamlist RBRACE .)
+    RBRACKET        reduce using rule 30 (object -> LBRACE objectparamlist RBRACE .)
+
+
+state 48
+
+    (32) objectparamlist -> objectparamlist COMMA . objectparam
+    (33) objectparam -> . QUOT objecttype QUOT COLON objectexpression
+
+    QUOT            shift and go to state 42
+
+    objectparam                    shift and go to state 54
+
+state 49
+
+    (33) objectparam -> QUOT objecttype . QUOT COLON objectexpression
+
+    QUOT            shift and go to state 55
+
+
+state 50
+
+    (34) objecttype -> RULE_TYPE .
+
+    QUOT            reduce using rule 34 (objecttype -> RULE_TYPE .)
+
+
+state 51
+
+    (35) objecttype -> CONDITION .
+
+    QUOT            reduce using rule 35 (objecttype -> CONDITION .)
+
+
+state 52
+
+    (26) listparamlist -> listparamlist COMMA listparam .
+
+    RBRACKET        reduce using rule 26 (listparamlist -> listparamlist COMMA listparam .)
+    COMMA           reduce using rule 26 (listparamlist -> listparamlist COMMA listparam .)
+
+
+state 53
+
+    (28) listparam -> QUOT ID QUOT .
+
+    RBRACKET        reduce using rule 28 (listparam -> QUOT ID QUOT .)
+    COMMA           reduce using rule 28 (listparam -> QUOT ID QUOT .)
+
+
+state 54
+
+    (32) objectparamlist -> objectparamlist COMMA objectparam .
+
+    RBRACE          reduce using rule 32 (objectparamlist -> objectparamlist COMMA objectparam .)
+    COMMA           reduce using rule 32 (objectparamlist -> objectparamlist COMMA objectparam .)
+
+
+state 55
+
+    (33) objectparam -> QUOT objecttype QUOT . COLON objectexpression
+
+    COLON           shift and go to state 56
+
+
+state 56
+
+    (33) objectparam -> QUOT objecttype QUOT COLON . objectexpression
+    (36) objectexpression -> . objectvariable
+    (37) objectexpression -> . objectcondition
+    (38) objectvariable -> . QUOT objectinput QUOT
+    (41) objectcondition -> . LBRACE RBRACE
+    (42) objectcondition -> . LBRACE conditionparamlist RBRACE
+
+    QUOT            shift and go to state 57
+    LBRACE          shift and go to state 61
+
+    objectexpression               shift and go to state 58
+    objectvariable                 shift and go to state 59
+    objectcondition                shift and go to state 60
+
+state 57
+
+    (38) objectvariable -> QUOT . objectinput QUOT
+    (39) objectinput -> . ALLOW_IF
+    (40) objectinput -> . DENY_IF
+
+    ALLOW_IF        shift and go to state 63
+    DENY_IF         shift and go to state 64
+
+    objectinput                    shift and go to state 62
+
+state 58
+
+    (33) objectparam -> QUOT objecttype QUOT COLON objectexpression .
+
+    RBRACE          reduce using rule 33 (objectparam -> QUOT objecttype QUOT COLON objectexpression .)
+    COMMA           reduce using rule 33 (objectparam -> QUOT objecttype QUOT COLON objectexpression .)
+
+
+state 59
+
+    (36) objectexpression -> objectvariable .
+
+    RBRACE          reduce using rule 36 (objectexpression -> objectvariable .)
+    COMMA           reduce using rule 36 (objectexpression -> objectvariable .)
+
+
+state 60
+
+    (37) objectexpression -> objectcondition .
+
+    RBRACE          reduce using rule 37 (objectexpression -> objectcondition .)
+    COMMA           reduce using rule 37 (objectexpression -> objectcondition .)
+
+
+state 61
+
+    (41) objectcondition -> LBRACE . RBRACE
+    (42) objectcondition -> LBRACE . conditionparamlist RBRACE
+    (43) conditionparamlist -> . conditionparam
+    (44) conditionparamlist -> . conditionparamlist COMMA conditionparam
+    (45) conditionparam -> . QUOT conditiontype QUOT COLON conditionexpression
+
+    RBRACE          shift and go to state 65
+    QUOT            shift and go to state 68
+
+    conditionparamlist             shift and go to state 66
+    conditionparam                 shift and go to state 67
+
+state 62
+
+    (38) objectvariable -> QUOT objectinput . QUOT
+
+    QUOT            shift and go to state 69
+
+
+state 63
+
+    (39) objectinput -> ALLOW_IF .
+
+    QUOT            reduce using rule 39 (objectinput -> ALLOW_IF .)
+
+
+state 64
+
+    (40) objectinput -> DENY_IF .
+
+    QUOT            reduce using rule 40 (objectinput -> DENY_IF .)
+
+
+state 65
+
+    (41) objectcondition -> LBRACE RBRACE .
+
+    RBRACE          reduce using rule 41 (objectcondition -> LBRACE RBRACE .)
+    COMMA           reduce using rule 41 (objectcondition -> LBRACE RBRACE .)
+    RBRACKET        reduce using rule 41 (objectcondition -> LBRACE RBRACE .)
+
+
+state 66
+
+    (42) objectcondition -> LBRACE conditionparamlist . RBRACE
+    (44) conditionparamlist -> conditionparamlist . COMMA conditionparam
+
+    RBRACE          shift and go to state 70
+    COMMA           shift and go to state 71
+
+
+state 67
+
+    (43) conditionparamlist -> conditionparam .
+
+    RBRACE          reduce using rule 43 (conditionparamlist -> conditionparam .)
+    COMMA           reduce using rule 43 (conditionparamlist -> conditionparam .)
+
+
+state 68
+
+    (45) conditionparam -> QUOT . conditiontype QUOT COLON conditionexpression
+    (46) conditiontype -> . CONDITION_TYPE
+    (47) conditiontype -> . CONDITION_NAME
+    (48) conditiontype -> . PUBKEY
+    (49) conditiontype -> . PUBKEYS
+    (50) conditiontype -> . SIGNATURES
+    (51) conditiontype -> . MINIMUM_REQUIRED
+    (52) conditiontype -> . CONDITIONS
+    (53) conditiontype -> . TIMESTAMP
+    (54) conditiontype -> . UTC
+
+    CONDITION_TYPE  shift and go to state 73
+    CONDITION_NAME  shift and go to state 74
+    PUBKEY          shift and go to state 75
+    PUBKEYS         shift and go to state 76
+    SIGNATURES      shift and go to state 77
+    MINIMUM_REQUIRED shift and go to state 78
+    CONDITIONS      shift and go to state 79
+    TIMESTAMP       shift and go to state 80
+    UTC             shift and go to state 81
+
+    conditiontype                  shift and go to state 72
+
+state 69
+
+    (38) objectvariable -> QUOT objectinput QUOT .
+
+    RBRACE          reduce using rule 38 (objectvariable -> QUOT objectinput QUOT .)
+    COMMA           reduce using rule 38 (objectvariable -> QUOT objectinput QUOT .)
+
+
+state 70
+
+    (42) objectcondition -> LBRACE conditionparamlist RBRACE .
+
+    RBRACE          reduce using rule 42 (objectcondition -> LBRACE conditionparamlist RBRACE .)
+    COMMA           reduce using rule 42 (objectcondition -> LBRACE conditionparamlist RBRACE .)
+    RBRACKET        reduce using rule 42 (objectcondition -> LBRACE conditionparamlist RBRACE .)
+
+
+state 71
+
+    (44) conditionparamlist -> conditionparamlist COMMA . conditionparam
+    (45) conditionparam -> . QUOT conditiontype QUOT COLON conditionexpression
+
+    QUOT            shift and go to state 68
+
+    conditionparam                 shift and go to state 82
+
+state 72
+
+    (45) conditionparam -> QUOT conditiontype . QUOT COLON conditionexpression
+
+    QUOT            shift and go to state 83
+
+
+state 73
+
+    (46) conditiontype -> CONDITION_TYPE .
+
+    QUOT            reduce using rule 46 (conditiontype -> CONDITION_TYPE .)
+
+
+state 74
+
+    (47) conditiontype -> CONDITION_NAME .
+
+    QUOT            reduce using rule 47 (conditiontype -> CONDITION_NAME .)
+
+
+state 75
+
+    (48) conditiontype -> PUBKEY .
+
+    QUOT            reduce using rule 48 (conditiontype -> PUBKEY .)
+
+
+state 76
+
+    (49) conditiontype -> PUBKEYS .
+
+    QUOT            reduce using rule 49 (conditiontype -> PUBKEYS .)
+
+
+state 77
+
+    (50) conditiontype -> SIGNATURES .
+
+    QUOT            reduce using rule 50 (conditiontype -> SIGNATURES .)
+
+
+state 78
+
+    (51) conditiontype -> MINIMUM_REQUIRED .
+
+    QUOT            reduce using rule 51 (conditiontype -> MINIMUM_REQUIRED .)
+
+
+state 79
+
+    (52) conditiontype -> CONDITIONS .
+
+    QUOT            reduce using rule 52 (conditiontype -> CONDITIONS .)
+
+
+state 80
+
+    (53) conditiontype -> TIMESTAMP .
+
+    QUOT            reduce using rule 53 (conditiontype -> TIMESTAMP .)
+
+
+state 81
+
+    (54) conditiontype -> UTC .
+
+    QUOT            reduce using rule 54 (conditiontype -> UTC .)
+
+
+state 82
+
+    (44) conditionparamlist -> conditionparamlist COMMA conditionparam .
+
+    RBRACE          reduce using rule 44 (conditionparamlist -> conditionparamlist COMMA conditionparam .)
+    COMMA           reduce using rule 44 (conditionparamlist -> conditionparamlist COMMA conditionparam .)
+
+
+state 83
+
+    (45) conditionparam -> QUOT conditiontype QUOT . COLON conditionexpression
+
+    COLON           shift and go to state 84
+
+
+state 84
+
+    (45) conditionparam -> QUOT conditiontype QUOT COLON . conditionexpression
+    (55) conditionexpression -> . conditionvariable
+    (56) conditionexpression -> . conditionlist
+    (57) conditionvariable -> . QUOT ID QUOT
+    (58) conditionlist -> . LBRACKET RBRACKET
+    (59) conditionlist -> . LBRACKET conditionlistparamlist RBRACKET
+
+    QUOT            shift and go to state 85
+    LBRACKET        shift and go to state 89
+
+    conditionexpression            shift and go to state 86
+    conditionvariable              shift and go to state 87
+    conditionlist                  shift and go to state 88
+
+state 85
+
+    (57) conditionvariable -> QUOT . ID QUOT
+
+    ID              shift and go to state 90
+
+
+state 86
+
+    (45) conditionparam -> QUOT conditiontype QUOT COLON conditionexpression .
+
+    RBRACE          reduce using rule 45 (conditionparam -> QUOT conditiontype QUOT COLON conditionexpression .)
+    COMMA           reduce using rule 45 (conditionparam -> QUOT conditiontype QUOT COLON conditionexpression .)
+
+
+state 87
+
+    (55) conditionexpression -> conditionvariable .
+
+    RBRACE          reduce using rule 55 (conditionexpression -> conditionvariable .)
+    COMMA           reduce using rule 55 (conditionexpression -> conditionvariable .)
+
+
+state 88
+
+    (56) conditionexpression -> conditionlist .
+
+    RBRACE          reduce using rule 56 (conditionexpression -> conditionlist .)
+    COMMA           reduce using rule 56 (conditionexpression -> conditionlist .)
+
+
+state 89
+
+    (58) conditionlist -> LBRACKET . RBRACKET
+    (59) conditionlist -> LBRACKET . conditionlistparamlist RBRACKET
+    (60) conditionlistparamlist -> . conditionlistparam
+    (61) conditionlistparamlist -> . conditionlistparamlist COMMA conditionlistparam
+    (62) conditionlistparam -> . objectcondition
+    (63) conditionlistparam -> . QUOT ID QUOT
+    (41) objectcondition -> . LBRACE RBRACE
+    (42) objectcondition -> . LBRACE conditionparamlist RBRACE
+
+    RBRACKET        shift and go to state 91
+    QUOT            shift and go to state 95
+    LBRACE          shift and go to state 61
+
+    conditionlistparamlist         shift and go to state 92
+    conditionlistparam             shift and go to state 93
+    objectcondition                shift and go to state 94
+
+state 90
+
+    (57) conditionvariable -> QUOT ID . QUOT
+
+    QUOT            shift and go to state 96
+
+
+state 91
+
+    (58) conditionlist -> LBRACKET RBRACKET .
+
+    RBRACE          reduce using rule 58 (conditionlist -> LBRACKET RBRACKET .)
+    COMMA           reduce using rule 58 (conditionlist -> LBRACKET RBRACKET .)
+
+
+state 92
+
+    (59) conditionlist -> LBRACKET conditionlistparamlist . RBRACKET
+    (61) conditionlistparamlist -> conditionlistparamlist . COMMA conditionlistparam
+
+    RBRACKET        shift and go to state 97
+    COMMA           shift and go to state 98
+
+
+state 93
+
+    (60) conditionlistparamlist -> conditionlistparam .
+
+    RBRACKET        reduce using rule 60 (conditionlistparamlist -> conditionlistparam .)
+    COMMA           reduce using rule 60 (conditionlistparamlist -> conditionlistparam .)
+
+
+state 94
+
+    (62) conditionlistparam -> objectcondition .
+
+    RBRACKET        reduce using rule 62 (conditionlistparam -> objectcondition .)
+    COMMA           reduce using rule 62 (conditionlistparam -> objectcondition .)
+
+
+state 95
+
+    (63) conditionlistparam -> QUOT . ID QUOT
+
+    ID              shift and go to state 99
+
+
+state 96
+
+    (57) conditionvariable -> QUOT ID QUOT .
+
+    RBRACE          reduce using rule 57 (conditionvariable -> QUOT ID QUOT .)
+    COMMA           reduce using rule 57 (conditionvariable -> QUOT ID QUOT .)
+
+
+state 97
+
+    (59) conditionlist -> LBRACKET conditionlistparamlist RBRACKET .
+
+    RBRACE          reduce using rule 59 (conditionlist -> LBRACKET conditionlistparamlist RBRACKET .)
+    COMMA           reduce using rule 59 (conditionlist -> LBRACKET conditionlistparamlist RBRACKET .)
+
+
+state 98
+
+    (61) conditionlistparamlist -> conditionlistparamlist COMMA . conditionlistparam
+    (62) conditionlistparam -> . objectcondition
+    (63) conditionlistparam -> . QUOT ID QUOT
+    (41) objectcondition -> . LBRACE RBRACE
+    (42) objectcondition -> . LBRACE conditionparamlist RBRACE
+
+    QUOT            shift and go to state 95
+    LBRACE          shift and go to state 61
+
+    conditionlistparam             shift and go to state 100
+    objectcondition                shift and go to state 94
+
+state 99
+
+    (63) conditionlistparam -> QUOT ID . QUOT
+
+    QUOT            shift and go to state 101
+
+
+state 100
+
+    (61) conditionlistparamlist -> conditionlistparamlist COMMA conditionlistparam .
+
+    RBRACKET        reduce using rule 61 (conditionlistparamlist -> conditionlistparamlist COMMA conditionlistparam .)
+    COMMA           reduce using rule 61 (conditionlistparamlist -> conditionlistparamlist COMMA conditionlistparam .)
+
+
+state 101
+
+    (63) conditionlistparam -> QUOT ID QUOT .
+
+    RBRACKET        reduce using rule 63 (conditionlistparam -> QUOT ID QUOT .)
+    COMMA           reduce using rule 63 (conditionlistparam -> QUOT ID QUOT .)
+

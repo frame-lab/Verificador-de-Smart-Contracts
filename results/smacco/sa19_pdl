@@ -1,0 +1,1 @@
+main = (standard = smacco;input_type = single;pubkey_list = 036245f426b4522e8a2901be6ccc1f71e37dc376726cc6665d80c5997e240568fb;rule_type = DENY_IF;condition_type = SELF_TRANSFER)

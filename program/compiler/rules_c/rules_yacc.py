@@ -15,8 +15,8 @@ class MyCRules(object):
 
     def p_program(self, p):
         '''program : declist funclist
-                | declist
-                | funclist'''
+                   | declist
+                   | funclist'''
         if (len(p) == 2):
             p[0] = self.node("program", [p[1]])
         elif (len(p) == 3):
@@ -24,7 +24,7 @@ class MyCRules(object):
 
     def p_declist(self, p):
         '''declist : declaration
-                | declist declaration'''
+                   | declist declaration'''
         if (len(p) == 2):
             p[0] = self.node("declist", [p[1]])
         elif (len(p) == 3):
@@ -44,7 +44,7 @@ class MyCRules(object):
 
     def p_identlist(self, p):
         '''identlist : identifier
-                    | identlist COMMA identifier'''
+                     | identlist COMMA identifier'''
         if (len(p) == 2):
             p[0] = self.node("identlist", [p[1]])
         elif (len(p) == 4):
@@ -52,7 +52,7 @@ class MyCRules(object):
 
     def p_identifier(self, p):
         '''identifier : ID
-                    | ID LBRACKET NUMBER RBRACKET'''
+                      | ID LBRACKET NUMBER RBRACKET'''
         if (len(p) == 2):
             p[0] = self.node("identifier", [p[1]])
         elif (len(p) == 5):
@@ -60,7 +60,7 @@ class MyCRules(object):
 
     def p_paramlist(self, p):
         '''paramlist : parameter
-                    | paramlist COMMA parameter'''
+                     | paramlist COMMA parameter'''
         if (len(p) == 2):
             p[0] = self.node("paramlist", [p[1]])
         elif (len(p) == 4):
@@ -120,7 +120,7 @@ class MyCRules(object):
 
     def p_assign(self, p):
         '''assign : ID EQUAL expr
-                | ID LBRACKET expr RBRACKET EQUAL expr'''
+                  | ID LBRACKET expr RBRACKET EQUAL expr'''
         if (len(p) == 4):
             p[0] = self.node("assign", [p[1], p[2], p[3]])
         elif (len(p) == 7):
@@ -140,7 +140,7 @@ class MyCRules(object):
 
     def p_arglist(self, p):
         '''arglist : arg
-                | arglist COMMA arg'''
+                   | arglist COMMA arg'''
         if (len(p) == 2):
             p[0] = self.node("arglist", [p[1]])
         elif (len(p) == 4):
@@ -152,7 +152,7 @@ class MyCRules(object):
 
     def p_retstmt(self, p):
         '''retstmt : RETURN SEMICOLON
-                | RETURN expr SEMICOLON'''
+                   | RETURN expr SEMICOLON'''
         if (len(p) == 3):
             p[0] = self.node("retstmt", [p[1], p[2]])
         elif (len(p) == 4):
@@ -183,7 +183,7 @@ class MyCRules(object):
 
     def p_id(self, p):
         '''id : ID
-            | ID LBRACKET expr RBRACKET'''
+              | ID LBRACKET expr RBRACKET'''
         if (len(p) == 2):
             p[0] = self.node("id", [p[1]])
         elif (len(p) == 5):
@@ -191,7 +191,7 @@ class MyCRules(object):
 
     def p_while(self, p):
         '''while : WHILE LPAREN expr RPAREN stmt
-                | DO stmt WHILE LPAREN expr RPAREN SEMICOLON'''
+                 | DO stmt WHILE LPAREN expr RPAREN SEMICOLON'''
         if (len(p) == 6):
             p[0] = self.node("while", [p[1], p[2], p[3], p[4], p[5]])
         elif (len(p) == 8):
@@ -204,7 +204,7 @@ class MyCRules(object):
 
     def p_if(self, p):
         '''if : IF LPAREN expr RPAREN stmt
-            | IF LPAREN expr RPAREN stmt ELSE stmt'''
+              | IF LPAREN expr RPAREN stmt ELSE stmt'''
         if (len(p) == 6):
             p[0] = self.node("if", [p[1], p[2], p[3], p[4], p[5]])
         elif (len(p) == 8):

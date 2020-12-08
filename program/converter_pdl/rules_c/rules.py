@@ -233,11 +233,11 @@ class MyCRules:
         if len(tree.children) == 5:
             while_node = self.node('open_while', '(', [])
             root.set_children(while_node)
-            cond_node = self.node('open_condition', '(', [])
+            cond_node = self.node('open_while_condition', '(', [])
             expr_node = self.node(
-                'expression', self.expr_c(tree.children[2]), [])
+                'expression', '{}{}'.format(self.expr_c(tree.children[2]), '?'), [])
             cond_node.set_children(expr_node)
-            cond_node.set_children(self.node('end_condition', ')?', []))
+            cond_node.set_children(self.node('end_condition', ')', []))
             while_node.set_children(cond_node)
             self.stmt_c(while_node, tree.children[4], False)
             if len(while_node.children) > 1:
@@ -245,70 +245,68 @@ class MyCRules:
             while_node.set_children(self.node('end_while', ')*', []))
             if sc:
                 while_node.set_children(
-                    self.node('pos_while', 'U~', []))
-                not_cond_node = self.node('open_condition', '(', [])
+                    self.node('pos_while', ';', []))
+                not_cond_node = self.node('open_while_condition_neg', '(', [])
                 expr_node = self.node(
-                    'expression', self.expr_c(tree.children[2]), [])
+                    'expression', '~{}{}'.format(self.expr_c(tree.children[2]), '?'), [])
                 not_cond_node.set_children(expr_node)
                 not_cond_node.set_children(
-                    self.node('end_condition', ')?;', []))
+                    self.node('end_condition', ');', []))
                 while_node.set_children(not_cond_node)
             else:
                 while_node.set_children(
-                    self.node('pos_while', 'U~', []))
-                not_cond_node = self.node('open_condition', '(', [])
+                    self.node('pos_while', ';', []))
+                not_cond_node = self.node('open_while_condition_neg', '(', [])
                 expr_node = self.node(
-                    'expression', self.expr_c(tree.children[2]), [])
+                    'expression', '~{}{}'.format(self.expr_c(tree.children[2]), '?'), [])
                 not_cond_node.set_children(expr_node)
                 not_cond_node.set_children(
-                    self.node('end_condition', ')?', []))
+                    self.node('end_condition', ')', []))
                 while_node.set_children(not_cond_node)
         elif len(tree.children) == 7:
+            self.stmt_c(root, tree.children[1], True)
             while_node = self.node('open_while', '(', [])
             root.set_children(while_node)
-            self.stmt_c(while_node, tree.children[1], False)
-            if len(while_node.children) > 0:
-                if len(while_node.children[-1].children) > 0:
-                    while_node.children[-1].children[-1].children[-1].value += ';'
-                else:
-                    while_node.children[-1].value = ';'
-            cond_node = self.node('open_condition', '(', [])
+            cond_node = self.node('open_while_condition', '(', [])
             expr_node = self.node(
-                'expression', self.expr_c(tree.children[4]), [])
+                'expression', '{}{}'.format(self.expr_c(tree.children[4]), '?'), [])
             cond_node.set_children(expr_node)
-            cond_node.set_children(self.node('end_condition', ')?', []))
+            cond_node.set_children(self.node('end_condition', ')', []))
             while_node.set_children(cond_node)
+            self.stmt_c(while_node, tree.children[1], False)
+            if len(while_node.children) > 1:
+                cond_node.children[-1].value += ';'
             while_node.set_children(self.node('end_while', ')*', []))
             if sc:
                 while_node.set_children(
-                    self.node('pos_while', 'U~', []))
-                not_cond_node = self.node('open_condition', '(', [])
+                    self.node('pos_while', ';', []))
+                not_cond_node = self.node('open_while_condition_neg', '(', [])
                 expr_node = self.node(
-                    'expression', self.expr_c(tree.children[4]), [])
+                    'expression', '~{}{}'.format(self.expr_c(tree.children[4]), '?'), [])
                 not_cond_node.set_children(expr_node)
                 not_cond_node.set_children(
-                    self.node('end_condition', ')?;', []))
+                    self.node('end_condition', ');', []))
                 while_node.set_children(not_cond_node)
             else:
                 while_node.set_children(
-                    self.node('pos_while', 'U~', []))
-                not_cond_node = self.node('open_condition', '(', [])
+                    self.node('pos_while', ';', []))
+                not_cond_node = self.node('open_while_condition_neg', '(', [])
                 expr_node = self.node(
-                    'expression', self.expr_c(tree.children[4]), [])
+                    'expression', '~{}{}'.format(self.expr_c(tree.children[4]), '?'), [])
                 not_cond_node.set_children(expr_node)
                 not_cond_node.set_children(
-                    self.node('end_condition', ')?', []))
+                    self.node('end_condition', ')', []))
                 while_node.set_children(not_cond_node)
 
     def for_c(self, root, tree, sc):
         self.assign_c(root, tree.children[2], True)
         for_node = self.node('open_for', '(', [])
         root.set_children(for_node)
-        cond_node = self.node('open_condition', '(', [])
+        cond_node = self.node('open_for_condition', '(', [])
         expr_node = self.node(
-            'expression', self.expr_c(tree.children[4]), [])
+            'expression', '{}{}'.format(self.expr_c(tree.children[4]), '?'), [])
         cond_node.set_children(expr_node)
-        cond_node.set_children(self.node('end_condition', ')?;', []))
+        cond_node.set_children(self.node('end_condition', ');', []))
         for_node.set_children(cond_node)
         self.stmt_c(for_node, tree.children[8], True)
         if len(for_node.children) > 1:
@@ -320,32 +318,32 @@ class MyCRules:
         for_node.set_children(self.node('end_for', ')*', []))
         if sc:
             for_node.set_children(
-                self.node('pos_for', 'U~', []))
-            not_cond_node = self.node('open_condition', '(', [])
+                self.node('pos_for', ';', []))
+            not_cond_node = self.node('open_for_condition_neg', '(', [])
             expr_node = self.node(
-                'expression', self.expr_c(tree.children[4]), [])
+                'expression', '~{}{}'.format(self.expr_c(tree.children[4]), '?'), [])
             not_cond_node.set_children(expr_node)
-            not_cond_node.set_children(self.node('end_condition', ')?;', []))
+            not_cond_node.set_children(self.node('end_condition', ');', []))
             for_node.set_children(not_cond_node)
         else:
             for_node.set_children(
-                self.node('pos_for', 'U~', []))
-            not_cond_node = self.node('open_condition', '(', [])
+                self.node('pos_for', ';', []))
+            not_cond_node = self.node('open_for_condition_neg', '(', [])
             expr_node = self.node(
-                'expression', self.expr_c(tree.children[4]), [])
+                'expression', '~{}{}'.format(self.expr_c(tree.children[4]), '?'), [])
             not_cond_node.set_children(expr_node)
-            not_cond_node.set_children(self.node('end_condition', ')?', []))
+            not_cond_node.set_children(self.node('end_condition', ')', []))
             for_node.set_children(not_cond_node)
 
     def if_c(self, root, tree, sc):
         if len(tree.children) == 5:
             if_node = self.node('open_if', '(', [])
             root.set_children(if_node)
-            cond_node = self.node('open_condition', '(', [])
+            cond_node = self.node('open_if_condition', '(', [])
             expr_node = self.node(
-                'expression', self.expr_c(tree.children[2]), [])
+                'expression', '{}{}'.format(self.expr_c(tree.children[2]), '?'), [])
             cond_node.set_children(expr_node)
-            cond_node.set_children(self.node('end_condition', ')?', []))
+            cond_node.set_children(self.node('end_condition', ')', []))
             if_node.set_children(cond_node)
             self.stmt_c(if_node, tree.children[4], False)
             if len(if_node.children) > 1:
@@ -353,30 +351,30 @@ class MyCRules:
             if_node.set_children(self.node('end_if', ')', []))
             if sc:
                 if_node.set_children(
-                    self.node('pos_if', 'U~'.format(expr_node.value), []))
-                not_cond_node = self.node('open_condition', '(', [])
+                    self.node('pos_if', 'U'.format(expr_node.value), []))
+                not_cond_node = self.node('open_if_condition_neg', '(', [])
                 expr_node = self.node(
-                    'expression', self.expr_c(tree.children[2]), [])
+                    'expression', '~{}{}'.format(self.expr_c(tree.children[2]), '?'), [])
                 not_cond_node.set_children(expr_node)
-                not_cond_node.set_children(self.node('end_condition', ')?;', []))
+                not_cond_node.set_children(self.node('end_condition', ');', []))
                 if_node.set_children(not_cond_node)
             else:
                 if_node.set_children(
-                    self.node('pos_if', 'U~'.format(expr_node.value), []))
-                not_cond_node = self.node('open_condition', '(', [])
+                    self.node('pos_if', 'U'.format(expr_node.value), []))
+                not_cond_node = self.node('open_if_condition_neg', '(', [])
                 expr_node = self.node(
-                    'expression', self.expr_c(tree.children[2]), [])
+                    'expression', '~{}{}'.format(self.expr_c(tree.children[2]), '?'), [])
                 not_cond_node.set_children(expr_node)
-                not_cond_node.set_children(self.node('end_condition', ')?', []))
+                not_cond_node.set_children(self.node('end_condition', ')', []))
                 if_node.set_children(not_cond_node)
         elif len(tree.children) == 7:
             if_node = self.node('open_if', '(', [])
             root.set_children(if_node)
-            cond_node = self.node('open_condition', '(', [])
+            cond_node = self.node('open_if_condition', '(', [])
             expr_node = self.node(
-                'expression', self.expr_c(tree.children[2]), [])
+                'expression', '{}{}'.format(self.expr_c(tree.children[2]), '?'), [])
             cond_node.set_children(expr_node)
-            cond_node.set_children(self.node('end_condition', ')?', []))
+            cond_node.set_children(self.node('end_condition', ')', []))
             if_node.set_children(cond_node)
             self.stmt_c(if_node, tree.children[4], False)
             if len(if_node.children) > 1:
@@ -384,12 +382,12 @@ class MyCRules:
             if_node.set_children(self.node('end_if', ')', []))
             if_node.set_children(
                 self.node('pos_if', 'U'.format(expr_node.value), []))
-            else_node = self.node('open_else', '(~', [])
-            not_cond_node = self.node('open_condition', '(', [])
+            else_node = self.node('open_else', '(', [])
+            not_cond_node = self.node('open_if_condition_neg', '(', [])
             expr_node = self.node(
-                    'expression', self.expr_c(tree.children[2]), [])
+                    'expression', '~{}{}'.format(self.expr_c(tree.children[2]), '?'), [])
             not_cond_node.set_children(expr_node)
-            not_cond_node.set_children(self.node('end_condition', ')?', []))
+            not_cond_node.set_children(self.node('end_condition', ')', []))
             else_node.set_children(not_cond_node)
             if_node.set_children(else_node)
             self.stmt_c(else_node, tree.children[6], False)

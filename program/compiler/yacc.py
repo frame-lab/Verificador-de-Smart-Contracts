@@ -7,7 +7,7 @@
 import libs.ply.yacc as yacc
 from program.compiler.lex import MyLexer
 from program.compiler.rules_c.rules_yacc import MyCRules
-from program.compiler.rules_json.rules_yacc import MyJsonRules
+from program.compiler.rules_smacco.rules_yacc import MyJsonRules
 
 
 class Node:
@@ -28,9 +28,10 @@ class MyCompiler(object):
         self.lexer = MyLexer(options, name)
         if options['program'] == 1:
             self.parser = yacc.yacc(module=MyCRules(Node, self.lexer.tokens))
+            self.out = open("./results/minic/{}_parser".format(name), "w")
         if options['program'] == 2:
             self.parser = yacc.yacc(module=MyJsonRules(Node, self.lexer.tokens))
-        self.out = open("./results/{}_parser".format(name), "w")
+            self.out = open("./results/smacco/{}_parser".format(name), "w")
 
     def write_file(self, out, node):
         out.write(node.__str__())

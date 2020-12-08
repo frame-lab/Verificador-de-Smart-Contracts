@@ -1,0 +1,36 @@
+MODULE main
+
+VAR
+	program : {int_i_0, int_j_1, sa-1_main()_2};
+	
+ASSIGN
+	init(progam) := int_i_0;
+	next(prog) := case
+			prog = int_i_0: int_j_1;
+			prog = int_j_1: sa-1_main()_2;
+			esac;
+	
+
+MODULE sa-1_main
+
+VAR
+	program : {i_=_0_0, i_=_1_1, i_>_10?_2, i_=_1_3, ~i_>_10?_4};
+	i : 0..1;
+	
+ASSIGN
+	init(progam) := i_=_0_0;
+	init(i) := 0;
+	next(prog) := case
+			prog = i_=_0_0: i_=_1_1;
+			prog = i_=_1_1: {i_>_10?_2, ~i_>_10?_4};
+			prog = i_>_10?_2: i_=_1;
+			prog = i_=_1_3: {i_>_10?_2, ~i_>_10?_4};
+			esac;
+	next(i) := case
+			prog = i_=_0_0 : 0;
+			prog = i_=_1_0 : 0;
+			prog = i_=_1_1 : 1;
+			TRUE = i;
+			esac;
+
+

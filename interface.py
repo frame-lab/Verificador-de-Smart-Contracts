@@ -153,17 +153,17 @@ if len(sys.argv) > 1:
     elif type == '-hc':
         print_help("./program/converter_pdl/rules_c/help")
     elif type == '-hj':
-        print_help("./program/converter_pdl/rules_json/help")
+        print_help("./program/converter_pdl/rules_smacco/help")
     elif type == '-c' or type == '-cn':
         set_converter("./samples/sample_c/", type)
     elif type == '-j' or type == '-jn':
-        set_converter("./samples/sample_json/", type)
+        set_converter("./samples/sample_smacco/", type)
     elif type == '-b':
         options = get_options()
         make_blockchain(None, options)
     elif type == '-bc':
         set_block("./samples/sample_c/")
     elif type == '-bj':
-        set_block("./samples/sample_json/")
+        set_block("./samples/sample_smacco/")
 else:
     print("you have to pass a routine parameter")
