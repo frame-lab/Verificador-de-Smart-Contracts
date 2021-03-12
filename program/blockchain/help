@@ -1,8 +1,0 @@
-BlockChain - create a model for the blockchain
-  -g <seed>                                           sautomatically generate a blockchain based on randomic parameters with an s seed
-  -m <nodes> <users> <balance> <transactions> <block> pass a blockchain with n node, u users, and three files with the balance, transactions and blocks
-  -nodes                                              set the max number of nodes
-  -users                                              set the max number of users
-  -balance                                            set the max value of balance
-  -transactions                                       set the max number of transactions
-  -block                                              set the max number of blocks

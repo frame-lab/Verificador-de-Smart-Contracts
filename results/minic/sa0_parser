@@ -1,5 +1,0 @@
-type = program, children = [funclist]
-type = funclist, children = [function]
-type = function, children = [type, 'main', '(', ')', compoundstmt]
-type = type, children = ['int']
-type = compoundstmt, children = ['{', '}']

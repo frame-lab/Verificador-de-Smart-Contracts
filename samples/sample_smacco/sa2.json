@@ -1,6 +1,0 @@
-{
-    "standard": "smacco",
-    "input_type": "array",
-    "inline_last": "disabled",
-    "default_rule": "ALLOW_ALL"
-}

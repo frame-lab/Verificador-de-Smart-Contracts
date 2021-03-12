@@ -1,6 +1,0 @@
-LexToken(INT,'int',1,0)
-LexToken(ID,'main',1,4)
-LexToken(LPAREN,'(',1,9)
-LexToken(RPAREN,')',1,10)
-LexToken(LBRACE,'{',1,12)
-LexToken(RBRACE,'}',1,17)

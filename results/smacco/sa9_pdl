@@ -1,1 +1,0 @@
-main = (standard = smacco;input_type = single;inline_last = disabled;pubkey_list = 036245f426b4522e8a2901be6ccc1f71e37dc376726cc6665d80c5997e240568fb;rule_type = ALLOW_IF;condition_type = CHECKSIG;pubkey = 0;default_rule = DENY_ALL)

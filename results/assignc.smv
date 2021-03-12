@@ -1,0 +1,18 @@
+MODULE main
+
+VAR
+	program : {int_i_0, i_=_0_1};
+	i : 0..0;
+	
+ASSIGN
+	init(progam) := int_i_0;
+	init(i) := 0;
+	next(prog) := case
+			prog = int_i_0: i_=_0_1;
+			esac;
+	next(i) := case
+			prog = i_=_0_1 : 1;
+			TRUE = i;
+			esac;
+
+
