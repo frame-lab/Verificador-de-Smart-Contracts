@@ -54,6 +54,7 @@ def get_options():
 
 
 if __name__ == '__main__':
+    #python3 verifier.py -cn assignc.c -smv outfile  
     if len(sys.argv) > 1 and sys.argv[1] == "help":
         print("HELP")
     else:
